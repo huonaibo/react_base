@@ -1,0 +1,22 @@
+/*
+ * @Descripttion: 
+ * @version: 
+ * @Author: NaiBo
+ * @Date: 2021-11-10 16:45:08
+ * @LastEditors: NaiBo
+ * @LastEditTime: 2021-11-10 16:54:05
+ */
+const path = require("path")
+
+const PROJECT_PATH = path.resolve(__dirname, "../")
+const PROJECT_NAME = path.resolve(PROJECT_PATH).name
+const isDev = process.env.NODE_ENV !== 'production'
+const SERVER_HOST = '127.0.0.1'
+const SERVER_PORT = 9000
+module.exports = {
+    PROJECT_PATH,
+    PROJECT_NAME,
+    isDev,
+    SERVER_HOST,
+    SERVER_PORT
+}
