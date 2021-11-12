@@ -4,16 +4,17 @@
  * @Author: NaiBo
  * @Date: 2021-11-10 16:40:59
  * @LastEditors: NaiBo
- * @LastEditTime: 2021-11-11 17:38:23
+ * @LastEditTime: 2021-11-11 20:41:16
  */
 const path = require("path")
 const HtmlWebpackPlugin = require("html-webpack-plugin") // 生成html
 const CopyPlugin = require('copy-webpack-plugin') // copy静态资源
 const WebpackBar = require("webpackbar") // 显示打包进度
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const { PROJECT_PATH, isDev } = require('../constant')
 
 const getCssLoaders = (importLoaders) => [
-    'style-loader',
+    isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
     {
         loader: 'css-loader',
         options: {
@@ -128,19 +129,24 @@ module.exports = {
         }),
         new CopyPlugin({
             patterns: [
-              {
-                context: path.resolve(PROJECT_PATH, './src/static'),
-                from: '*',
-                to: path.resolve(PROJECT_PATH, './dist'),
-                toType: 'dir',
-              },
+                {
+                    context: path.resolve(PROJECT_PATH, './static'),
+                    from: '*',
+                    to: path.resolve(PROJECT_PATH, './dist'),
+                    toType: 'dir',
+                },
             ],
-          }),
-          new WebpackBar({
+        }),
+        new WebpackBar({
             name: isDev ? '正在启动' : '正在打包',
             color: '#fa8c16',
-          }),
-    ]
+        }),
+
+    ],
+    // externals: { // 剥离代码   通过script引入
+    //     react: 'React',
+    //     'react-dom': 'ReactDOM',
+    // },
 }
 
 
